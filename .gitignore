@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.jax_compilation_cache/
+.dependency-wheels/
+.coverage
+htmlcov/
+.env
+.env.*
