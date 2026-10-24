@@ -20,3 +20,6 @@ coverage.json
 htmlcov/
 coverage-input/
 coverage-site/
+
+ci-environment.json
+inference-fixture/

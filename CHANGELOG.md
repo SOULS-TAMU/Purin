@@ -10,6 +10,9 @@ no release date is assigned.
 
 ### Added
 
+- Cross-platform CPU CI for Linux, Windows and Apple Silicon macOS, with
+  baseline/current JAX, runtime configuration artifacts and ARM64 coverage.
+
 - GitHub Actions CI for numerical tests, package checks and Ruff, with measured
   branch coverage reporting and scheduled Python CodeQL analysis.
 

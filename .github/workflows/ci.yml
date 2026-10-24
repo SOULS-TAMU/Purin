@@ -19,6 +19,10 @@ env:
   JAX_ENABLE_X64: 'true'
   PYTHONDONTWRITEBYTECODE: '1'
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   quality:
     name: Ruff and source checks
@@ -35,13 +39,30 @@ jobs:
       - run: python -m compileall -q src tests .github/scripts
 
   tests:
-    name: Python ${{ matrix.python }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
+    name: ${{ matrix.os }} / Python ${{ matrix.python }} / JAX ${{ matrix.jax }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      PIP_CONSTRAINT: ${{ matrix.jax == 'baseline' && format('{0}/.github/constraints/jax-baseline.txt', github.workspace) || '' }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        jax: [current]
+        include:
+          - os: ubuntu-latest
+            python: '3.12'
+            jax: baseline
+          - os: windows-latest
+            python: '3.12'
+            jax: baseline
+          - os: macos-latest
+            python: '3.12'
+            jax: baseline
+          - os: ubuntu-24.04-arm
+            python: '3.13'
+            jax: current
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
@@ -53,10 +74,19 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install ".[test]"
           python -m pip check
+      - name: Record runtime configuration
+        run: python .github/scripts/environment.py
+      - name: Store runtime configuration
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: environment-${{ matrix.os }}-py${{ matrix.python }}-${{ matrix.jax }}
+          path: ci-environment.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Tests and branch coverage
         run: python -m pytest -q  --cov=purin --cov-branch --cov-report=term-missing --cov-report=xml --cov-report=json
       - name: Store coverage reports
-        if: matrix.python == '3.12'
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12' && matrix.jax == 'current'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: coverage
@@ -67,8 +97,12 @@ jobs:
           retention-days: 14
 
   package:
-    name: Build and install distributions
-    runs-on: ubuntu-latest
+    name: Build and install / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -86,10 +120,10 @@ jobs:
         run: |
           python -m pip install dist/*.whl
           python -m pip check
-          python -I -c "import purin; assert purin.__version__ == '0.1.0'"
+          python -I -c "from importlib.metadata import version; import purin; assert purin.__version__ == version('purin')"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: distributions
+          name: distributions-${{ runner.os }}-${{ runner.arch }}
           path: dist/*
           if-no-files-found: error
           retention-days: 14
