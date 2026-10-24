@@ -22,7 +22,7 @@ Issues = "https://github.com/SOULS-TAMU/Purin/issues"
 Changelog = "https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-test = ["pytest>=8", "pytest-cov>=5"]
+test = ["pytest>=8", "pytest-cov>=5", "osqp>=1"]
 build = ["build>=1", "twine>=5"]
 cuda12 = ["jax[cuda12]>=0.4.30"]
 
@@ -51,4 +51,4 @@ source = ["purin"]
 show_missing = true
 precision = 1
 include_namespace_packages = true
-fail_under = 45
+fail_under = 85
