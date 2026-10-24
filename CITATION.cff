@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use PURIN, please cite this software. A BibTeX entry is available in CITATION.bib."
+type: software
+title: "PURIN: Differentiable constrained projections and sparse numerical kernels in JAX"
+authors:
+  - name: "SOULS-TAMU contributors"
+version: "0.1.0"
+url: "https://github.com/SOULS-TAMU/Purin"
+repository-code: "https://github.com/SOULS-TAMU/Purin"
+license: Apache-2.0
