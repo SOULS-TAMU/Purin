@@ -106,11 +106,17 @@ and residuals, and choose precision and tolerances for your problem.
 
 ## Architecture
 
-![KKTHN, DAEHN and NLPOPTNet use the shared OHAGI engine and PURIN projection backend.](assets/hardnet-architecture.svg)
+PURIN is the numerical projection library in the HardNet stack. It can be used
+independently or through OHAGI's shared learning workflow, with responsibilities
+divided across three layers:
 
-PURIN owns projection problem compilation, solvers, sparse kernels and
-projection differentiation. OHAGI owns the learning engine and model
-deployment. The frontends supply their framework-specific formulations.
+- **KKTHN, DAEHN and NLPOPTNet** supply framework-specific problem formulations
+  and processing through their frontend APIs.
+- **OHAGI** builds and trains projected neural models, then handles checkpoints,
+  JAX model export and inference.
+- **PURIN** compiles projection problems, prepares reusable solver resources,
+  and computes projections and their derivatives using shared numerical kernels.
+  It does not depend on OHAGI or the frontend libraries.
 
 ## Project information
 
