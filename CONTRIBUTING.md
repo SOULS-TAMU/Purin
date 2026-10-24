@@ -114,3 +114,32 @@ Contributions are provided under the project's [Apache-2.0 license](LICENSE).
 Retain relevant attribution in [AUTHORS](AUTHORS) and [NOTICE](NOTICE).
 Keep [CITATION.bib](CITATION.bib) and [CITATION.cff](CITATION.cff) consistent.
 The CFF metadata supports GitHub's citation panel; BibTeX remains available directly.
+
+## Automated checks
+
+CI runs the numerical tests on Python 3.10–3.14, checks Ruff formatting and
+lint, and builds and installs the distributions. Python 3.10 exercises the
+latest dependency versions that still support that interpreter. Dependency
+resolution on newer interpreters exercises their available JAX wheels.
+The test suite is in `tests/`.
+
+Install the test dependencies with `python -m pip install ".[test]"`, then run:
+
+```sh
+python -m pytest -q --cov=purin --cov-branch --cov-report=term-missing --cov-report=xml --cov-report=json
+```
+
+Coverage measures the entire package, including unexecuted modules. The badge
+combines statement and branch coverage from the Python 3.12 core test run.
+Reports are retained as workflow artifacts; the badge and measured totals are
+published to `codex/coverage` after successful trusted pushes to `main`.
+Pull requests run checks with read-only repository access and do not publish
+coverage. No third-party coverage account or additional secret is required.
+
+CodeQL runs extended Python security analysis on pushes, pull requests and a
+weekly schedule. Its badge reports workflow execution status; inspect code
+scanning alerts separately. GitHub Actions dependencies are pinned to commits
+and monitored by Dependabot.
+
+The initial combined coverage floor is 45%, based on the measured baseline.
+Raise this floor as coverage improves; do not omit modules to improve the score.

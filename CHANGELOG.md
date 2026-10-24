@@ -10,6 +10,9 @@ no release date is assigned.
 
 ### Added
 
+- GitHub Actions CI for numerical tests, package checks and Ruff, with measured
+  branch coverage reporting and scheduled Python CodeQL analysis.
+
 - A standalone JAX library for constrained projections and sparse numerical
   kernels, usable independently of OHAGI and the frontend frameworks.
 - Projection problem interfaces and reusable preparation utilities.

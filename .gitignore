@@ -13,3 +13,10 @@ dist/
 htmlcov/
 .env
 .env.*
+
+.coverage*
+coverage.xml
+coverage.json
+htmlcov/
+coverage-input/
+coverage-site/
