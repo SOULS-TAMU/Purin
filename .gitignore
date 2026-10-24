@@ -23,3 +23,15 @@ coverage-site/
 
 ci-environment.json
 inference-fixture/
+
+# CI validation outputs (baselines are tracked under .github/validation).
+site/
+quality-duplication/
+quality-results.json
+documentation-results.json
+numerical-results.json
+performance-results.json
+performance-base.json
+integration-*.json
+validation-base/
+.mypy_cache/

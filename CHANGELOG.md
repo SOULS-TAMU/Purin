@@ -10,6 +10,9 @@ no release date is assigned.
 
 ### Added
 
+- API, numerical, frontend integration, dependency review, documentation,
+  quality regression and informational performance workflows.
+
 - Expanded analytic, dense-reference, sparse-kernel and implicit-gradient tests,
   with an inclusive 85% combined statement-and-branch coverage gate.
 

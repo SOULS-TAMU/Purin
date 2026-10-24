@@ -154,3 +154,11 @@ and monitored by Dependabot.
 The combined statement-and-branch coverage floor is 85%. Every source module,
 including the dense reference solvers, remains in the denominator. Do not omit
 modules to improve the score.
+
+## Compatibility and quality regression checks
+
+Additional workflows protect public APIs, numerical results and frontend
+integration, validate documentation and dependency changes, and publish code
+quality and performance reports. See the [validation policies](.github/validation/README.md)
+for thresholds, existing baselines and reproduction instructions. Timing changes
+are informational; correctness and quality regressions fail their checks.
