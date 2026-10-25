@@ -10,11 +10,14 @@ no release date is assigned.
 
 ### Added
 
+- Added dense-reference KKT/Pallas-interpreter checks, barrier derivatives,
+  sparse adjoint validation and full-state projection pullback tests.
+
 - API, numerical, frontend integration, dependency review, documentation,
   quality regression and informational performance workflows.
 
 - Expanded analytic, dense-reference, sparse-kernel and implicit-gradient tests,
-  with an inclusive 85% combined statement-and-branch coverage gate.
+  with an inclusive 90% combined statement-and-branch coverage gate.
 
 - Cross-platform CPU CI for Linux, Windows and Apple Silicon macOS, with
   baseline/current JAX, runtime configuration artifacts and ARM64 coverage.

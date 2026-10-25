@@ -142,6 +142,9 @@ CPU compatibility is verified in GitHub Actions:
 CI checks current compatible JAX releases and JAX 0.6.2 on Python 3.12
 across all three OSes. See the [CI matrix](CONTRIBUTING.md#automated-checks).
 
+CI requires at least **90% combined statement and branch coverage** across the
+whole package. The coverage badge reports the measured result.
+
 ## License
 
 PURIN is licensed under [Apache-2.0](LICENSE). Attribution is recorded in

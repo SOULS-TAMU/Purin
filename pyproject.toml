@@ -51,4 +51,4 @@ source = ["purin"]
 show_missing = true
 precision = 1
 include_namespace_packages = true
-fail_under = 85
+fail_under = 90
