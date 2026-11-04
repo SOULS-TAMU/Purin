@@ -3,10 +3,10 @@
 Notable changes to PURIN are recorded here. This history starts with the
 initial public version; internal development steps are not separate releases.
 The first GitHub publication contains the initial source distribution.
-Version 0.1.0 remains unreleased until a release is explicitly published;
+Version 1.0.0 remains unreleased until a release is explicitly published;
 no release date is assigned.
 
-## 0.1.0 — Unreleased
+## 1.0.0 — Unreleased
 
 ### Added
 
