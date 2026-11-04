@@ -6,11 +6,11 @@
 
 **Differentiable constraint projections and sparse numerical kernels in JAX.**
 
-[![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml?query=branch%3Adevelopment)
-[![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml?query=branch%3Adevelopment)
-[![CodeQL](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml?query=branch%3Adevelopment)
-[![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Adevelopment)
-[![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage-development/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage-development)
+[![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml?query=branch%3Amain)
+[![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml?query=branch%3Amain)
+[![CodeQL](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml?query=branch%3Amain)
+[![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Amain)
+[![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage)
 
 [![Python 3.10–3.14](https://img.shields.io/badge/Python-3.10%E2%80%933.14-3776AB?logo=python&logoColor=white)](.github/workflows/ci.yml)
 [![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](.github/workflows/ci.yml)
@@ -35,11 +35,11 @@ frontends.
 
 ## Installation
 
-This README documents the **development branch**. Install its source packages
+This README documents the **main branch (version 1.0.0)**. Install its source packages
 in dependency order with Python 3.10 or newer:
 
 ```shell
-python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@development"
+python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@main"
 ```
 
 From a local stack checkout, use `python -m pip install ./purin`.
@@ -104,13 +104,13 @@ and residuals, and choose precision and tolerances for your problem.
 
 ## The HardNet stack
 
-- **[KKTHN](https://github.com/SOULS-TAMU/kkt-hardnet/tree/development),
-  [DAEHN](https://github.com/SOULS-TAMU/dae-hardnet/tree/development) and
+- **[KKTHN](https://github.com/SOULS-TAMU/kkt-hardnet/tree/main),
+  [DAEHN](https://github.com/SOULS-TAMU/dae-hardnet/tree/main) and
   [NLPOPTNet](https://github.com/SOULS-TAMU/nlpoptnet)** supply problem formulations
   and framework-specific processing.
-- **[OHAGI](https://github.com/SOULS-TAMU/Ohagi/tree/development)** composes models,
+- **[OHAGI](https://github.com/SOULS-TAMU/Ohagi/tree/main)** composes models,
   runs the shared learning engine, and handles checkpoints and JAX deployment.
-- **[PURIN](https://github.com/SOULS-TAMU/Purin/tree/development)** owns projection
+- **[PURIN](https://github.com/SOULS-TAMU/Purin/tree/main)** owns projection
   problems, numerical solvers, sparse kernels and projection differentiation.
 
 ## Compatibility and validation
