@@ -1,56 +1,53 @@
 <p align="center">
-  <img src="assets/purin-logo-v2.png" alt="PURIN logo" width="220">
+  <img src="assets/purin-logo-v2.png" alt="PURIN logo" width="200">
 </p>
 
 # PURIN
 
-[![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml)
-[![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage)
-[![CodeQL](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml)
-[![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml)
+**Differentiable constraint projections and sparse numerical kernels in JAX.**
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
-[![Powered by JAX](https://img.shields.io/badge/JAX-powered-8A2BE2)](https://docs.jax.dev/)
-[![License: Apache-2.0](https://img.shields.io/github/license/SOULS-TAMU/Purin?color=blue)](LICENSE)
-[![Citation: BibTeX](https://img.shields.io/badge/Citation-BibTeX-6F4E37)](CITATION.bib)
+[![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml?query=branch%3Adevelopment)
+[![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml?query=branch%3Adevelopment)
+[![CodeQL](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml?query=branch%3Adevelopment)
+[![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=development)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Adevelopment)
+[![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage-development/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage-development)
 
-**Differentiable constrained projections and sparse numerical kernels in JAX.**
+[![Python 3.10–3.14](https://img.shields.io/badge/Python-3.10%E2%80%933.14-3776AB?logo=python&logoColor=white)](.github/workflows/ci.yml)
+[![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](.github/workflows/ci.yml)
+[![JAX](https://img.shields.io/badge/Powered_by-JAX-8A2BE2)](https://docs.jax.dev/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](LICENSE)
+[![Citation: BibTeX](https://img.shields.io/badge/Cite-BibTeX-6F4E37)](CITATION.bib)
 
-PURIN turns problem definitions into reusable projection layers. Use it on
-its own or as the numerical backend for OHAGI and the KKTHN, DAEHN and
-NLPOPTNet frontends.
+Turn a parameterized constraint problem into a reusable projection layer.
+Use PURIN independently or as the numerical backend for OHAGI and the HardNet
+frontends.
 
-[Installation](#installation) · [Quick start](#quick-start) ·
-[Projection methods](#projection-methods) · [Architecture](#architecture) ·
-[Contributing](CONTRIBUTING.md)
-
-- **Composable projections:** Euclidean distance, diagonal weighted distance
+- **Projection formulations:** Euclidean distance, diagonal weighted distance
   and objective-aware local quadratic corrections.
-- **Shared solvers:** closed-form equality projection, Chambolle–Pock, ADMM,
-  Fischer–Burmeister variants and primal-dual interior point methods.
-- **JAX integration:** sparse operators and differentiable projection layers
-  for constrained learning workflows.
+- **Six solver methods:** affine equality projection, Chambolle–Pock, ADMM,
+  full/reduced Fischer–Burmeister and primal-dual interior point.
+- **Sparse computation:** reusable operators and kernels, including matrix-free
+  paths where supported by the selected solver.
+- **Differentiable layers:** solver-specific implicit differentiation and
+  numerical diagnostics for constrained learning.
+
+[Installation](#installation) · [Basic API](#basic-api) · [Projection methods](#projection-methods) · [Documentation](#documentation) · [Contributing](#contributing) · [Citation](#citation)
 
 ## Installation
 
-Install from the GitHub source repository:
+This README documents the **development branch**. Install its source packages
+in dependency order with Python 3.10 or newer:
 
-```sh
-git clone https://github.com/SOULS-TAMU/Purin.git
-cd Purin
-python -m pip install .
+```shell
+python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@development"
 ```
 
-For a local HardNet stack checkout, run `python -m pip install ./purin`
-from the stack directory.
-
-Python 3.10 or newer is required. Install JAX for your device using the
-[JAX installation guide](https://docs.jax.dev/en/latest/installation.html).
+From a local stack checkout, use `python -m pip install ./purin`.
 PURIN does not depend on OHAGI or any frontend package.
 
-## Quick start
+## Basic API
 
-Project a two-dimensional point onto the equality constraint `u + v = b`:
+Project a point onto the affine equality **u + v = b**:
 
 ```python
 import jax
@@ -72,9 +69,9 @@ projected = project(candidate, parameters)
 print(projected)  # [[ 1.5 -0.5]]
 ```
 
-Prepare the layer once and reuse it for inputs with the configured batch
-size and dtype. Choose precision, solver settings and tolerances for your
-problem; iterative solver convergence depends on that configuration.
+Prepare once and reuse the layer for its configured shapes and dtype. The same
+problem interface accepts other registered solver methods when their constraint
+requirements are satisfied.
 
 ## Projection methods
 
@@ -105,47 +102,54 @@ For nonlinear, nonconvex constraints, convergence to a local stationary point
 does not establish a globally nearest feasible point. Check solver diagnostics
 and residuals, and choose precision and tolerances for your problem.
 
-## Architecture
+## The HardNet stack
 
-PURIN is the numerical projection library in the HardNet stack. It can be used
-independently or through OHAGI's shared learning workflow, with responsibilities
-divided across three layers:
+- **[KKTHN](https://github.com/SOULS-TAMU/kkt-hardnet/tree/development),
+  [DAEHN](https://github.com/SOULS-TAMU/dae-hardnet/tree/development) and
+  [NLPOPTNet](https://github.com/SOULS-TAMU/nlpoptnet)** supply problem formulations
+  and framework-specific processing.
+- **[OHAGI](https://github.com/SOULS-TAMU/Ohagi/tree/development)** composes models,
+  runs the shared learning engine, and handles checkpoints and JAX deployment.
+- **[PURIN](https://github.com/SOULS-TAMU/Purin/tree/development)** owns projection
+  problems, numerical solvers, sparse kernels and projection differentiation.
 
-- **KKTHN, DAEHN and NLPOPTNet** supply framework-specific problem formulations
-  and processing through their frontend APIs.
-- **OHAGI** builds and trains projected neural models, then handles checkpoints,
-  JAX model export and inference.
-- **PURIN** compiles projection problems, prepares reusable solver resources,
-  and computes projections and their derivatives using shared numerical kernels.
-  It does not depend on OHAGI or the frontend libraries.
+## Compatibility and validation
 
-## Project information
+The CPU CI matrix covers **Python 3.10–3.14** on Linux, Windows and macOS,
+plus Linux ARM64 on Python 3.13. It exercises current compatible JAX releases
+and JAX 0.6.2 on Python 3.12. See the [workflow](.github/workflows/ci.yml)
+for exact environments; accelerator installation follows the
+[JAX guide](https://docs.jax.dev/en/latest/installation.html).
 
-This is the initial public source distribution. Version 0.1.0 is in
-preparation; no tagged release is published yet.
+- **CI:** tests, distribution builds and installation checks.
+- **Validation:** public APIs, numerical references, documentation and code quality.
+- **Coverage:** at least **90% combined statement and branch coverage**; the badge
+  links to the measured report for this branch.
+- **Security:** CodeQL analysis and dependency review.
 
-[Issues](https://github.com/SOULS-TAMU/Purin/issues) ·
-[Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) ·
-[BibTeX citation](CITATION.bib)
+## Documentation
 
-## Cross-platform compatibility
-
-CPU compatibility is verified in GitHub Actions:
-
-| Platform | Python versions |
+| Resource | Contents |
 | --- | --- |
-| Linux x86-64 | 3.10–3.14 |
-| Windows x86-64 | 3.10–3.14 |
-| macOS Apple Silicon | 3.10–3.14 |
-| Linux ARM64 | 3.13 |
+| [Projection methods](#projection-methods) | Algorithm names, suitable problems and formulation choices |
+| [Contribution guide](CONTRIBUTING.md) | Solver boundaries, numerical validation and packaging |
+| [Validation policy](.github/validation/README.md) | API, gradient, sparse-kernel and quality checks |
+| [Changelog](CHANGELOG.md) | Initial release scope and changes |
 
-CI checks current compatible JAX releases and JAX 0.6.2 on Python 3.12
-across all three OSes. See the [CI matrix](CONTRIBUTING.md#automated-checks).
+## Contributing
 
-CI requires at least **90% combined statement and branch coverage** across the
-whole package. The coverage badge reports the measured result.
+Bug reports, examples and focused pull requests are welcome. Read
+[CONTRIBUTING.md](CONTRIBUTING.md) for setup, numerical checks and compatibility
+requirements. Keep generated results, environments and checkpoints out of Git.
+
+## Citation
+
+Use [CITATION.bib](CITATION.bib) for a copyable BibTeX entry or GitHub's
+**Cite this repository** menu for [citation metadata](CITATION.cff).
 
 ## License
 
-PURIN is licensed under [Apache-2.0](LICENSE). Attribution is recorded in
-[AUTHORS](AUTHORS) and [NOTICE](NOTICE).
+[Apache License 2.0](LICENSE). Authorship and upstream attribution are recorded
+in [AUTHORS](AUTHORS) and [NOTICE](NOTICE).
+
+[Changelog](CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
