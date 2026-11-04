@@ -165,7 +165,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: SOULS-TAMU/Ohagi
-          ref: e28f687e840d6840b259e687323029c3cc49bd59
+          ref: 65beffeb2e26d90af147d01c36b3daa2e47e947f
           path: integration-consumer
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
@@ -174,7 +174,7 @@ jobs:
           cache: pip
       - name: Install consumer, candidate PURIN and frozen frontends
         run: |
-          python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@40f7a261a3d791b78bdedbdf80770d0daf909740"
+          python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@5cbbd0ca41cc83069da6144abcdbe85164f59b94"
           python -m pip install "./integration-consumer[test,flax,orbax,optax,plotting]"
           python -m pip install --no-deps .
           python -m pip install --no-deps integration-consumer/.github/fixtures/frontends/{kkthn,daehn,nlpoptnet}
