@@ -92,8 +92,12 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: '3.12'
-      - run: python -m pip install -r .github/validation/requirements.txt
+      - name: Install documentation tools and actual package
+        run: |
+          python -m pip install -r .github/validation/requirements.txt -r docs/requirements.txt
+          python -m pip install .
       - run: python .github/scripts/documentation.py
+      - run: python .github/scripts/documentation_examples.py
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: documentation-preview

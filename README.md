@@ -129,6 +129,10 @@ for exact environments; accelerator installation follows the
 
 ## Documentation
 
+The full Sphinx guide follows the Read the Docs style: [contents](docs/index.rst),
+[runnable examples](docs/examples/index.rst), [API reference](docs/api/index.rst)
+and [build instructions](docs/BUILD.md).
+
 | Resource | Contents |
 | --- | --- |
 | [Projection methods](#projection-methods) | Algorithm names, suitable problems and formulation choices |

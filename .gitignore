@@ -35,3 +35,7 @@ performance-base.json
 integration-*.json
 validation-base/
 .mypy_cache/
+
+# Generated documentation.
+/docs/_build/
+/docs/api/_generated/

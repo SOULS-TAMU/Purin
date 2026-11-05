@@ -1,0 +1,7 @@
+Sphinx>=8.2,<9
+sphinx-rtd-theme>=3.1,<4
+myst-parser>=4,<5
+pybtex>=0.26,<0.27
+PyYAML>=6,<7
+# CPU autodoc baseline; runtime CI tests broader JAX configurations.
+jax[cpu]==0.6.2
