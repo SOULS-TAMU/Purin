@@ -40,7 +40,6 @@ Start with :doc:`affine projection <examples/quickstart>`, compare its
    BUILD
    PUBLISHING
    QUALITY
-   QUALITY
 
 Indices and search
 ------------------

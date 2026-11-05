@@ -15,11 +15,11 @@
 [![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Amain)
 [![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage)
 
-[![Python 3.10–3.15](https://img.shields.io/badge/Python-3.10%E2%80%933.15-3776AB?logo=python&logoColor=white)](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/release.yml)
-[![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/ci.yml)
+[![Python 3.10â€“3.15](https://img.shields.io/badge/Python-3.10%E2%80%933.15-3776AB?logo=python&logoColor=white)](.github/workflows/release.yml)
+[![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](.github/workflows/ci.yml)
 [![JAX](https://img.shields.io/badge/Powered_by-JAX-8A2BE2)](https://docs.jax.dev/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](https://github.com/SOULS-TAMU/Purin/blob/main/LICENSE)
-[![Citation: BibTeX](https://img.shields.io/badge/Cite-BibTeX-6F4E37)](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.bib)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](LICENSE)
+[![Citation: BibTeX](https://img.shields.io/badge/Cite-BibTeX-6F4E37)](CITATION.bib)
 
 Turn a parameterized constraint problem into a reusable projection layer.
 Use PURIN independently or as the numerical backend for OHAGI and the HardNet
@@ -27,14 +27,14 @@ frontends.
 
 - **Projection formulations:** Euclidean distance, diagonal weighted distance
   and objective-aware local quadratic corrections.
-- **Six solver methods:** affine equality projection, Chambolle–Pock, ADMM,
-  full/reduced Fischer–Burmeister and primal-dual interior point.
+- **Six solver methods:** affine equality projection, Chambolleâ€“Pock, ADMM,
+  full/reduced Fischerâ€“Burmeister and primal-dual interior point.
 - **Sparse computation:** reusable operators and kernels, including matrix-free
   paths where supported by the selected solver.
 - **Differentiable layers:** solver-specific implicit differentiation and
   numerical diagnostics for constrained learning.
 
-[Installation](#installation) · [Basic API](#basic-api) · [Projection methods](#projection-methods) · [Documentation](#documentation) · [Contributing](#contributing) · [Citation](#citation)
+[Installation](#installation) Â· [Basic API](#basic-api) Â· [Projection methods](#projection-methods) Â· [Documentation](#documentation) Â· [Contributing](#contributing) Â· [Citation](#citation)
 
 ## Installation
 
@@ -52,7 +52,7 @@ python -m pip install --upgrade purin
 
 PURIN can be used independently or through OHAGI and the HardNet frontends.
 For source/editable installs, see
-[installation options](https://github.com/SOULS-TAMU/Purin/blob/main/docs/INSTALL.md).
+[installation options](docs/INSTALL.md).
 
 ## Basic API
 
@@ -89,10 +89,10 @@ Choose a solver for the constraint structure of your projection problem:
 | Algorithm / method name | Suitable problems | Implementation notes |
 | --- | --- | --- |
 | Linear equality (`linear-equality`) | Euclidean projection onto affine equalities, such as conservation equations or linear balance constraints. | Direct equality-system solve. Requires verified affine constraints; inequalities and nonlinear equalities are rejected. |
-| Chambolle–Pock (`chambolle-pock`) | Convex distance projections with affine equalities, affine inequalities and bounds; useful for sparse polyhedral constraints. | First-order primal-dual splitting with fixed-step or accelerated updates through `ChambollePockConfig(accelerated=...)`. Both variants use shared sparse kernels. |
+| Chambolleâ€“Pock (`chambolle-pock`) | Convex distance projections with affine equalities, affine inequalities and bounds; useful for sparse polyhedral constraints. | First-order primal-dual splitting with fixed-step or accelerated updates through `ChambollePockConfig(accelerated=...)`. Both variants use shared sparse kernels. |
 | ADMM (`admm`) | Convex distance projections with affine equalities, affine inequalities and bounds, including structured linear constraints. | OSQP-style operator splitting with configurable penalty and linear solves. Requires verified affine constraints. |
-| Full Fischer–Burmeister Newton (`fischer-burmeister-newton`) | Distance projections with smooth nonlinear equalities and inequalities, as well as affine constraints. | Solves the full stationarity, feasibility and complementarity system using a Fischer–Burmeister reformulation. |
-| Reduced Fischer–Burmeister (`fischer-burmeister-reduced`) | The same affine or smooth nonlinear constrained projection class, especially when a reduced sparse Newton system is useful. | Uses pivot reduction and sparse linear-system operators for the complementarity equations. |
+| Full Fischerâ€“Burmeister Newton (`fischer-burmeister-newton`) | Distance projections with smooth nonlinear equalities and inequalities, as well as affine constraints. | Solves the full stationarity, feasibility and complementarity system using a Fischerâ€“Burmeister reformulation. |
+| Reduced Fischerâ€“Burmeister (`fischer-burmeister-reduced`) | The same affine or smooth nonlinear constrained projection class, especially when a reduced sparse Newton system is useful. | Uses pivot reduction and sparse linear-system operators for the complementarity equations. |
 | Primal-dual interior point (`primal-dual-interior-point`) | Distance projections with smooth equality and inequality constraints, including nonlinear formulations. | Uses primal-dual barrier iterations and Newton systems with positive slack and inequality-multiplier iterates. |
 
 `Distance` defines Euclidean projection; `WeightedDistance` supplies a positive
@@ -113,20 +113,20 @@ and residuals, and choose precision and tolerances for your problem.
 
 ## The HardNet stack
 
-- **[KKTHN](https://github.com/SOULS-TAMU/kkt-hardnet/tree/main),
-  [DAEHN](https://github.com/SOULS-TAMU/dae-hardnet/tree/main) and
+- **[KKTHN](https://github.com/SOULS-TAMU/kkt-hardnet),
+  [DAEHN](https://github.com/SOULS-TAMU/dae-hardnet) and
   [NLPOPTNet](https://github.com/SOULS-TAMU/nlpoptnet)** supply problem formulations
   and framework-specific processing.
-- **[OHAGI](https://github.com/SOULS-TAMU/Ohagi/tree/main)** composes models,
+- **[OHAGI](https://github.com/SOULS-TAMU/Ohagi)** composes models,
   runs the shared learning engine, and handles checkpoints and JAX deployment.
-- **[PURIN](https://github.com/SOULS-TAMU/Purin/tree/main)** owns projection
+- **[PURIN](https://github.com/SOULS-TAMU/Purin)** owns projection
   problems, numerical solvers, sparse kernels and projection differentiation.
 
 ## Compatibility and validation
 
-The PyPI CPU installation matrix covers **Python 3.10–3.15** on Linux, Windows and macOS,
+The PyPI CPU installation matrix covers **Python 3.10â€“3.15** on Linux, Windows and macOS,
 plus Linux ARM64 on Python 3.13. It uses current compatible JAX releases;
-regular CI additionally tests JAX 0.6.2 on Python 3.12. See the [release workflow](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/release.yml)
+regular CI additionally tests JAX 0.6.2 on Python 3.12. See the [release workflow](.github/workflows/release.yml)
 for exact environments; accelerator installation follows the
 [JAX guide](https://docs.jax.dev/en/latest/installation.html).
 
@@ -138,35 +138,35 @@ for exact environments; accelerator installation follows the
 
 ## Documentation
 
-**[Read the full documentation](https://purin.readthedocs.io/en/latest/)** — installation, tutorials, user guide and API reference.
+**[Read the full documentation](https://purin.readthedocs.io/en/latest/)** â€” installation, tutorials, user guide and API reference.
 
-The full Sphinx guide follows the Read the Docs style: [contents](https://github.com/SOULS-TAMU/Purin/blob/main/docs/index.rst),
-[runnable examples](https://github.com/SOULS-TAMU/Purin/blob/main/docs/examples/index.rst), [API reference](https://github.com/SOULS-TAMU/Purin/blob/main/docs/api/index.rst)
-and [build instructions](https://github.com/SOULS-TAMU/Purin/blob/main/docs/BUILD.md).
+The full Sphinx guide follows the Read the Docs style: [contents](docs/index.rst),
+[runnable examples](docs/examples/index.rst), [API reference](docs/api/index.rst)
+and [build instructions](docs/BUILD.md).
 
 | Resource | Contents |
 | --- | --- |
 | [Projection methods](#projection-methods) | Algorithm names, suitable problems and formulation choices |
-| [Contribution guide](https://github.com/SOULS-TAMU/Purin/blob/main/CONTRIBUTING.md) | Solver boundaries, numerical validation and packaging |
-| [Validation policy](https://github.com/SOULS-TAMU/Purin/blob/main/.github/validation/README.md) | API, gradient, sparse-kernel and quality checks |
-| [Changelog](https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md) | Initial release scope and changes |
+| [Contribution guide](CONTRIBUTING.md) | Solver boundaries, numerical validation and packaging |
+| [Validation policy](.github/validation/README.md) | API, gradient, sparse-kernel and quality checks |
+| [Changelog](CHANGELOG.md) | Initial release scope and changes |
 
 ## Contributing
 
 Bug reports, examples and focused pull requests are welcome. Read
-[CONTRIBUTING.md](https://github.com/SOULS-TAMU/Purin/blob/main/CONTRIBUTING.md) for setup, numerical checks and compatibility
+[CONTRIBUTING.md](CONTRIBUTING.md) for setup, numerical checks and compatibility
 requirements. Keep generated results, environments and checkpoints out of Git.
 
 ## Citation
 
-Use [CITATION.bib](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.bib) for a copyable BibTeX entry or GitHub's
-**Cite this repository** menu for [citation metadata](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.cff).
+Use [CITATION.bib](CITATION.bib) for a copyable BibTeX entry or GitHub's
+**Cite this repository** menu for [citation metadata](CITATION.cff).
 
 ## License
 
-[Apache License 2.0](https://github.com/SOULS-TAMU/Purin/blob/main/LICENSE). Authorship and upstream attribution are recorded
-in [AUTHORS](https://github.com/SOULS-TAMU/Purin/blob/main/AUTHORS) and [NOTICE](https://github.com/SOULS-TAMU/Purin/blob/main/NOTICE).
+[Apache License 2.0](LICENSE). Authorship and upstream attribution are recorded
+in [AUTHORS](AUTHORS) and [NOTICE](NOTICE).
 
-[Changelog](https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
+[Changelog](CHANGELOG.md) Â· [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
 
 Measured source structure and existing quality limits are documented in [Quality](docs/QUALITY.md).
