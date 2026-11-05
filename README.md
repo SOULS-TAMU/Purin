@@ -4,4 +4,4 @@ Measured over the entire package, including unexecuted modules. The percentage c
 
 - Covered statements: 8928/9586
 - Covered branches: 1591/2022
-- Source commit: 5109d5e0ebb3c555b84d3251658968dd3dea6553
+- Source commit: 79d0087328c4432d3950a14a1f81173e804bf6f2
