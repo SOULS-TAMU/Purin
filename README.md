@@ -15,7 +15,7 @@
 [![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Amain)
 [![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage)
 
-[![Python 3.10â€“3.15](https://img.shields.io/badge/Python-3.10%E2%80%933.15-3776AB?logo=python&logoColor=white)](.github/workflows/release.yml)
+[![Python 3.10–3.15](https://img.shields.io/badge/Python-3.10%E2%80%933.15-3776AB?logo=python&logoColor=white)](.github/workflows/release.yml)
 [![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](.github/workflows/ci.yml)
 [![JAX](https://img.shields.io/badge/Powered_by-JAX-8A2BE2)](https://docs.jax.dev/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](LICENSE)
@@ -27,14 +27,14 @@ frontends.
 
 - **Projection formulations:** Euclidean distance, diagonal weighted distance
   and objective-aware local quadratic corrections.
-- **Six solver methods:** affine equality projection, Chambolleâ€“Pock, ADMM,
-  full/reduced Fischerâ€“Burmeister and primal-dual interior point.
+- **Six solver methods:** affine equality projection, Chambolle–Pock, ADMM,
+  full/reduced Fischer–Burmeister and primal-dual interior point.
 - **Sparse computation:** reusable operators and kernels, including matrix-free
   paths where supported by the selected solver.
 - **Differentiable layers:** solver-specific implicit differentiation and
   numerical diagnostics for constrained learning.
 
-[Installation](#installation) Â· [Basic API](#basic-api) Â· [Projection methods](#projection-methods) Â· [Documentation](#documentation) Â· [Contributing](#contributing) Â· [Citation](#citation)
+[Installation](#installation) · [Basic API](#basic-api) · [Projection methods](#projection-methods) · [Documentation](#documentation) · [Contributing](#contributing) · [Citation](#citation)
 
 ## Installation
 
@@ -89,10 +89,10 @@ Choose a solver for the constraint structure of your projection problem:
 | Algorithm / method name | Suitable problems | Implementation notes |
 | --- | --- | --- |
 | Linear equality (`linear-equality`) | Euclidean projection onto affine equalities, such as conservation equations or linear balance constraints. | Direct equality-system solve. Requires verified affine constraints; inequalities and nonlinear equalities are rejected. |
-| Chambolleâ€“Pock (`chambolle-pock`) | Convex distance projections with affine equalities, affine inequalities and bounds; useful for sparse polyhedral constraints. | First-order primal-dual splitting with fixed-step or accelerated updates through `ChambollePockConfig(accelerated=...)`. Both variants use shared sparse kernels. |
+| Chambolle–Pock (`chambolle-pock`) | Convex distance projections with affine equalities, affine inequalities and bounds; useful for sparse polyhedral constraints. | First-order primal-dual splitting with fixed-step or accelerated updates through `ChambollePockConfig(accelerated=...)`. Both variants use shared sparse kernels. |
 | ADMM (`admm`) | Convex distance projections with affine equalities, affine inequalities and bounds, including structured linear constraints. | OSQP-style operator splitting with configurable penalty and linear solves. Requires verified affine constraints. |
-| Full Fischerâ€“Burmeister Newton (`fischer-burmeister-newton`) | Distance projections with smooth nonlinear equalities and inequalities, as well as affine constraints. | Solves the full stationarity, feasibility and complementarity system using a Fischerâ€“Burmeister reformulation. |
-| Reduced Fischerâ€“Burmeister (`fischer-burmeister-reduced`) | The same affine or smooth nonlinear constrained projection class, especially when a reduced sparse Newton system is useful. | Uses pivot reduction and sparse linear-system operators for the complementarity equations. |
+| Full Fischer–Burmeister Newton (`fischer-burmeister-newton`) | Distance projections with smooth nonlinear equalities and inequalities, as well as affine constraints. | Solves the full stationarity, feasibility and complementarity system using a Fischer–Burmeister reformulation. |
+| Reduced Fischer–Burmeister (`fischer-burmeister-reduced`) | The same affine or smooth nonlinear constrained projection class, especially when a reduced sparse Newton system is useful. | Uses pivot reduction and sparse linear-system operators for the complementarity equations. |
 | Primal-dual interior point (`primal-dual-interior-point`) | Distance projections with smooth equality and inequality constraints, including nonlinear formulations. | Uses primal-dual barrier iterations and Newton systems with positive slack and inequality-multiplier iterates. |
 
 `Distance` defines Euclidean projection; `WeightedDistance` supplies a positive
@@ -124,7 +124,7 @@ and residuals, and choose precision and tolerances for your problem.
 
 ## Compatibility and validation
 
-The PyPI CPU installation matrix covers **Python 3.10â€“3.15** on Linux, Windows and macOS,
+The PyPI CPU installation matrix covers **Python 3.10–3.15** on Linux, Windows and macOS,
 plus Linux ARM64 on Python 3.13. It uses current compatible JAX releases;
 regular CI additionally tests JAX 0.6.2 on Python 3.12. See the [release workflow](.github/workflows/release.yml)
 for exact environments; accelerator installation follows the
@@ -138,7 +138,7 @@ for exact environments; accelerator installation follows the
 
 ## Documentation
 
-**[Read the full documentation](https://purin.readthedocs.io/en/latest/)** â€” installation, tutorials, user guide and API reference.
+**[Read the full documentation](https://purin.readthedocs.io/en/latest/)** — installation, tutorials, user guide and API reference.
 
 The full Sphinx guide follows the Read the Docs style: [contents](docs/index.rst),
 [runnable examples](docs/examples/index.rst), [API reference](docs/api/index.rst)
@@ -167,6 +167,6 @@ Use [CITATION.bib](CITATION.bib) for a copyable BibTeX entry or GitHub's
 [Apache License 2.0](LICENSE). Authorship and upstream attribution are recorded
 in [AUTHORS](AUTHORS) and [NOTICE](NOTICE).
 
-[Changelog](CHANGELOG.md) Â· [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
+[Changelog](CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
 
 Measured source structure and existing quality limits are documented in [Quality](docs/QUALITY.md).
