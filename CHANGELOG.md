@@ -2,11 +2,13 @@
 
 Notable changes to PURIN are recorded here. This history starts with the
 initial public version; internal development steps are not separate releases.
-The first GitHub publication contains the initial source distribution.
-Version 1.0.0 remains unreleased until a release is explicitly published;
-no release date is assigned.
+Release dates follow the PyPI publication date in America/Chicago.
 
-## 1.0.0 — Unreleased
+## Unreleased
+
+- Improve repository releases, publishing checks and contribution workflows; runtime APIs and numerical implementations are unchanged.
+
+## 1.0.0 — 2026-11-05
 
 - Promote the shared-stack implementation to `main`; preserve the previous main in `v0.1.0`.
 - Align main-branch installation links, badges and citation metadata.
