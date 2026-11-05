@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/purin-logo-v2.png" alt="PURIN logo" width="200">
+  <img src="https://raw.githubusercontent.com/SOULS-TAMU/Purin/main/assets/purin-logo-v2.png" alt="PURIN logo" width="200">
 </p>
 
 # PURIN
@@ -12,11 +12,11 @@
 [![Dependency review](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/dependency-review.yml?query=branch%3Amain)
 [![Coverage](https://raw.githubusercontent.com/SOULS-TAMU/Purin/codex/coverage/coverage.svg)](https://github.com/SOULS-TAMU/Purin/tree/codex/coverage)
 
-[![Python 3.10–3.14](https://img.shields.io/badge/Python-3.10%E2%80%933.14-3776AB?logo=python&logoColor=white)](.github/workflows/ci.yml)
-[![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](.github/workflows/ci.yml)
+[![Python 3.10–3.14](https://img.shields.io/badge/Python-3.10%E2%80%933.14-3776AB?logo=python&logoColor=white)](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/ci.yml)
+[![CPU platforms](https://img.shields.io/badge/CPU-Linux%20%7C%20Windows%20%7C%20macOS-555555)](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/ci.yml)
 [![JAX](https://img.shields.io/badge/Powered_by-JAX-8A2BE2)](https://docs.jax.dev/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](LICENSE)
-[![Citation: BibTeX](https://img.shields.io/badge/Cite-BibTeX-6F4E37)](CITATION.bib)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue)](https://github.com/SOULS-TAMU/Purin/blob/main/LICENSE)
+[![Citation: BibTeX](https://img.shields.io/badge/Cite-BibTeX-6F4E37)](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.bib)
 
 Turn a parameterized constraint problem into a reusable projection layer.
 Use PURIN independently or as the numerical backend for OHAGI and the HardNet
@@ -117,7 +117,7 @@ and residuals, and choose precision and tolerances for your problem.
 
 The CPU CI matrix covers **Python 3.10–3.14** on Linux, Windows and macOS,
 plus Linux ARM64 on Python 3.13. It exercises current compatible JAX releases
-and JAX 0.6.2 on Python 3.12. See the [workflow](.github/workflows/ci.yml)
+and JAX 0.6.2 on Python 3.12. See the [workflow](https://github.com/SOULS-TAMU/Purin/blob/main/.github/workflows/ci.yml)
 for exact environments; accelerator installation follows the
 [JAX guide](https://docs.jax.dev/en/latest/installation.html).
 
@@ -131,31 +131,31 @@ for exact environments; accelerator installation follows the
 
 **[Read the full documentation](https://purin.readthedocs.io/en/latest/)** — installation, tutorials, user guide and API reference.
 
-The full Sphinx guide follows the Read the Docs style: [contents](docs/index.rst),
-[runnable examples](docs/examples/index.rst), [API reference](docs/api/index.rst)
-and [build instructions](docs/BUILD.md).
+The full Sphinx guide follows the Read the Docs style: [contents](https://github.com/SOULS-TAMU/Purin/blob/main/docs/index.rst),
+[runnable examples](https://github.com/SOULS-TAMU/Purin/blob/main/docs/examples/index.rst), [API reference](https://github.com/SOULS-TAMU/Purin/blob/main/docs/api/index.rst)
+and [build instructions](https://github.com/SOULS-TAMU/Purin/blob/main/docs/BUILD.md).
 
 | Resource | Contents |
 | --- | --- |
 | [Projection methods](#projection-methods) | Algorithm names, suitable problems and formulation choices |
-| [Contribution guide](CONTRIBUTING.md) | Solver boundaries, numerical validation and packaging |
-| [Validation policy](.github/validation/README.md) | API, gradient, sparse-kernel and quality checks |
-| [Changelog](CHANGELOG.md) | Initial release scope and changes |
+| [Contribution guide](https://github.com/SOULS-TAMU/Purin/blob/main/CONTRIBUTING.md) | Solver boundaries, numerical validation and packaging |
+| [Validation policy](https://github.com/SOULS-TAMU/Purin/blob/main/.github/validation/README.md) | API, gradient, sparse-kernel and quality checks |
+| [Changelog](https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md) | Initial release scope and changes |
 
 ## Contributing
 
 Bug reports, examples and focused pull requests are welcome. Read
-[CONTRIBUTING.md](CONTRIBUTING.md) for setup, numerical checks and compatibility
+[CONTRIBUTING.md](https://github.com/SOULS-TAMU/Purin/blob/main/CONTRIBUTING.md) for setup, numerical checks and compatibility
 requirements. Keep generated results, environments and checkpoints out of Git.
 
 ## Citation
 
-Use [CITATION.bib](CITATION.bib) for a copyable BibTeX entry or GitHub's
-**Cite this repository** menu for [citation metadata](CITATION.cff).
+Use [CITATION.bib](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.bib) for a copyable BibTeX entry or GitHub's
+**Cite this repository** menu for [citation metadata](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.cff).
 
 ## License
 
-[Apache License 2.0](LICENSE). Authorship and upstream attribution are recorded
-in [AUTHORS](AUTHORS) and [NOTICE](NOTICE).
+[Apache License 2.0](https://github.com/SOULS-TAMU/Purin/blob/main/LICENSE). Authorship and upstream attribution are recorded
+in [AUTHORS](https://github.com/SOULS-TAMU/Purin/blob/main/AUTHORS) and [NOTICE](https://github.com/SOULS-TAMU/Purin/blob/main/NOTICE).
 
-[Changelog](CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
+[Changelog](https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)

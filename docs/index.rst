@@ -38,6 +38,7 @@ Start with :doc:`affine projection <examples/quickstart>`, compare its
    contributing
    changelog
    BUILD
+   PUBLISHING
 
 Indices and search
 ------------------

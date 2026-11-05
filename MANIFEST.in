@@ -1,1 +1,4 @@
 include AUTHORS CHANGELOG.md CITATION.bib CITATION.cff CONTRIBUTING.md NOTICE
+
+recursive-include docs *.rst *.md *.py *.css *.html *.json *.txt *.png
+recursive-include assets *.png *.svg

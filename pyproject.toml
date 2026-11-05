@@ -15,6 +15,19 @@ license-files = ["LICENSE*", "NOTICE"]
 authors = [{name = "SOULS-TAMU contributors"}]
 keywords = ["jax", "constrained-learning", "differentiable-optimization"]
 
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
 [project.urls]
 Documentation = "https://purin.readthedocs.io/en/latest/"
 Homepage = "https://github.com/SOULS-TAMU/Purin"
