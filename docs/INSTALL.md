@@ -8,13 +8,16 @@ python -m venv .venv
 # PowerShell: .venv\Scripts\Activate.ps1
 # Linux/macOS: source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@main"
+python -m pip install purin
 python -c "import purin; print(purin.__version__)"
 ```
 
-These source commands select the current shared-stack implementation. Package-index
-publishing is a separate release step. For a local editable installation, install
-the sibling packages in dependency order using `python -m pip install -e <folder>`.
+PyPI resolves the shared-stack dependencies automatically. For development from a
+local checkout, install the sibling source packages in dependency order using
+`python -m pip install -e <folder>`: PURIN, OHAGI, then the frontend.
 Start with CPU execution and choose supported JAX/CUDA dependencies if needed.
 
 PURIN depends on JAX, NumPy and SciPy, not on OHAGI or a frontend.
+
+The production release installation checks cover Python 3.10–3.15 on Linux,
+Windows and macOS, plus Linux ARM64. See [publishing and verification](PUBLISHING.md).
