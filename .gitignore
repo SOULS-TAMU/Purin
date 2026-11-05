@@ -39,3 +39,6 @@ validation-base/
 # Generated documentation.
 /docs/_build/
 /docs/api/_generated/
+
+# Repository validation output
+release-check-results.json
