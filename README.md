@@ -35,14 +35,21 @@ frontends.
 
 ## Installation
 
-Requires **Python 3.10 or newer**. Install from PyPI:
+Requires **Python 3.10 or newer**. Install the latest compatible release from PyPI:
 
 ```shell
 python -m pip install purin
 ```
 
-From a local stack checkout, use `python -m pip install ./purin`.
-PURIN does not depend on OHAGI or any frontend package.
+To update an existing installation:
+
+```shell
+python -m pip install --upgrade purin
+```
+
+PURIN can be used independently or through OHAGI and the HardNet frontends.
+For source/editable installs, see
+[installation options](https://github.com/SOULS-TAMU/Purin/blob/main/docs/INSTALL.md).
 
 ## Basic API
 
