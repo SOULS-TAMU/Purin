@@ -157,7 +157,7 @@ jobs:
           if-no-files-found: error
 
   frontend-integration:
-    name: Frozen frontend integration / ${{ matrix.framework }}
+    name: Published frontend integration / ${{ matrix.framework }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     strategy:
@@ -169,19 +169,19 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: SOULS-TAMU/Ohagi
-          ref: 65beffeb2e26d90af147d01c36b3daa2e47e947f
+          ref: b0a6b3c81f9d4e1d7dbb355eb841b444b29bf241
           path: integration-consumer
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: '3.12'
           cache: pip
-      - name: Install consumer, candidate PURIN and frozen frontends
+      - name: Install published consumers and candidate PURIN
         run: |
-          python -m pip install "purin @ git+https://github.com/SOULS-TAMU/Purin.git@5cbbd0ca41cc83069da6144abcdbe85164f59b94"
-          python -m pip install "./integration-consumer[test,flax,orbax,optax,plotting]"
-          python -m pip install --no-deps .
-          python -m pip install --no-deps integration-consumer/.github/fixtures/frontends/{kkthn,daehn,nlpoptnet}
+          python -m pip install "ohagi[nlpoptnet,plotting]==1.0.0"
+          python -m pip install --no-deps --force-reinstall .
+          python -m pip install --no-deps --index-url https://pypi.org/simple/ "kkt-hardnet==2.0.0" "daehn==2.0.0"
+          python -m pip install --no-deps integration-consumer/.github/fixtures/frontends/nlpoptnet
           python -m pip check
       - name: Short training and metadata inference with candidate PURIN
         run: python integration-consumer/.github/scripts/frontend_integration.py "${{ matrix.framework }}"
