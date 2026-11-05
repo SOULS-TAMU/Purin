@@ -7,7 +7,7 @@
 **Differentiable constraint projections and sparse numerical kernels in JAX.**
 
 [![PyPI](https://img.shields.io/pypi/v/purin)](https://pypi.org/project/purin/)
-[![Documentation](https://readthedocs.org/projects/purin/badge/?version=latest)](https://purin.readthedocs.io/en/latest/)
+[![Documentation](https://img.shields.io/readthedocs/purin/latest?logo=readthedocs&label=docs)](https://purin.readthedocs.io/en/latest/)
 
 [![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml?query=branch%3Amain)
 [![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml?query=branch%3Amain)
