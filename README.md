@@ -6,6 +6,9 @@
 
 **Differentiable constraint projections and sparse numerical kernels in JAX.**
 
+[![PyPI](https://img.shields.io/pypi/v/purin)](https://pypi.org/project/purin/)
+[![Documentation](https://readthedocs.org/projects/purin/badge/?version=latest)](https://purin.readthedocs.io/en/latest/)
+
 [![CI](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/ci.yml?query=branch%3Amain)
 [![Validation](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/validation.yml?query=branch%3Amain)
 [![CodeQL](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/SOULS-TAMU/Purin/actions/workflows/codeql.yml?query=branch%3Amain)
@@ -165,3 +168,5 @@ Use [CITATION.bib](https://github.com/SOULS-TAMU/Purin/blob/main/CITATION.bib) f
 in [AUTHORS](https://github.com/SOULS-TAMU/Purin/blob/main/AUTHORS) and [NOTICE](https://github.com/SOULS-TAMU/Purin/blob/main/NOTICE).
 
 [Changelog](https://github.com/SOULS-TAMU/Purin/blob/main/CHANGELOG.md) · [Report an issue](https://github.com/SOULS-TAMU/Purin/issues)
+
+Measured source structure and existing quality limits are documented in [Quality](docs/QUALITY.md).

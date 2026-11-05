@@ -162,3 +162,6 @@ integration, validate documentation and dependency changes, and publish code
 quality and performance reports. See the [validation policies](.github/validation/README.md)
 for thresholds, existing baselines and reproduction instructions. Timing changes
 are informational; correctness and quality regressions fail their checks.
+
+See [measured quality and compatibility policies](docs/QUALITY.md) before changing
+validation limits. Report security issues privately using [SECURITY.md](SECURITY.md).
