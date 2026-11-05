@@ -16,6 +16,7 @@ authors = [{name = "SOULS-TAMU contributors"}]
 keywords = ["jax", "constrained-learning", "differentiable-optimization"]
 
 [project.urls]
+Documentation = "https://purin.readthedocs.io/en/latest/"
 Homepage = "https://github.com/SOULS-TAMU/Purin"
 Repository = "https://github.com/SOULS-TAMU/Purin"
 Issues = "https://github.com/SOULS-TAMU/Purin/issues"
