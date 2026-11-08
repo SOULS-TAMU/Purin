@@ -11,7 +11,7 @@ from .dense import dense_operators, solve_dense
 from .kernels import cp_step, norm_estimate
 
 
-def _forward(accelerated):
+def _forward(accelerated, operator_factory=dense_operators):
     def solve(
         q,
         c,
@@ -41,6 +41,7 @@ def _forward(accelerated):
             lower,
             upper,
             accelerated=accelerated,
+            operator_factory=operator_factory,
             safety=safety,
             norm_iterations=knorm_iters,
             norm_seed=knorm_seed,
@@ -54,11 +55,11 @@ def _forward(accelerated):
     return solve
 
 
-def _cp_step_fixed(z, params, steps):
+def _cp_step_fixed(z, params, steps, operator_factory=dense_operators):
     y, equality, inequality, extrapolated = z
     q, c, a, b, matrix, d, lower, upper = params
     tau, sigma, theta, inverse = steps
-    mv, tmv = dense_operators(a, matrix)
+    mv, tmv = operator_factory(a, matrix)
     next_y, dual, next_bar = cp_step(
         (y, jnp.concatenate((equality, inequality), axis=1), extrapolated),
         q,
@@ -78,10 +79,12 @@ def _cp_step_fixed(z, params, steps):
     return next_y, dual[:, : a.shape[1]], dual[:, a.shape[1] :], next_bar
 
 
-def _steps_fixed(Q_diag, A, C, *, safety, knorm_iters, knorm_seed):
+def _steps_fixed(
+    Q_diag, A, C, *, safety, knorm_iters, knorm_seed, operator_factory=dense_operators
+):
     dtype = jnp.result_type(Q_diag.dtype, A.dtype, C.dtype)
     q, a, c = (jnp.asarray(value, dtype=dtype) for value in (Q_diag, A, C))
-    mv, tmv = dense_operators(a, c)
+    mv, tmv = operator_factory(a, c)
     norm = norm_estimate(
         mv, tmv, q.shape[0], q.shape[1], dtype, knorm_iters, knorm_seed
     )
@@ -98,7 +101,7 @@ def _steps_fixed(Q_diag, A, C, *, safety, knorm_iters, knorm_seed):
 _steps_for_accel_backward = _steps_fixed
 
 
-def _implicit(forward):
+def _implicit(forward, operator_factory=dense_operators):
     @jax.custom_vjp
     def solve(
         Q_diag,
@@ -182,7 +185,13 @@ def _implicit(forward):
         )
         y, equality, inequality = result
         steps = _steps_fixed(
-            Q_diag, A, C, safety=safety, knorm_iters=knorm_iters, knorm_seed=knorm_seed
+            Q_diag,
+            A,
+            C,
+            safety=safety,
+            knorm_iters=knorm_iters,
+            knorm_seed=knorm_seed,
+            operator_factory=operator_factory,
         )
         frozen = jax.tree_util.tree_map(
             jax.lax.stop_gradient,
@@ -198,7 +207,7 @@ def _implicit(forward):
         state, params, steps, iterations = residual
         cotangent = (*cotangent, jnp.zeros_like(cotangent[0]))
         gradients = fixed_point_pullback(
-            lambda z, p: _cp_step_fixed(z, p, steps),
+            lambda z, p: _cp_step_fixed(z, p, steps, operator_factory),
             state,
             params,
             cotangent,

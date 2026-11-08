@@ -27,6 +27,7 @@ def solve_dense_implicit(
     y0=None,
     lambda0=None,
     mu0=None,
+    inequality_support=None,
 ):
     """Solve batched diagonal QPs with PURIN's implicit-differentiable CP layer.
 
@@ -54,6 +55,9 @@ def solve_dense_implicit(
         y0: Optional primal warm start of shape ``(batch, n)``.
         lambda0: Optional equality-multiplier warm start of shape ``(batch, me)``.
         mu0: Optional inequality-multiplier warm start of shape ``(batch, mi)``.
+        inequality_support: Optional fixed structural column indices for each
+            inequality row. Every possible nonzero must be included. Only these
+            entries are packed; equality products remain dense.
 
     Returns:
         Tuple ``(y, equality_multipliers, inequality_multipliers)`` in the
@@ -98,6 +102,16 @@ def solve_dense_implicit(
         lambda0 = lambda0 / jnp.where(eq_scale == 0.0, 1.0, eq_scale)
         mu0 = mu0 / jnp.where(iq_scale == 0.0, 1.0, iq_scale)
     solve = CP_accelerated_implicit_jit if accelerated else CP_fixed_implicit_jit
+    if inequality_support is not None:
+        from .sparse_layer import packed_implicit_solver
+
+        pack, solve = packed_implicit_solver(
+            tuple(tuple(row) for row in inequality_support),
+            n,
+            matrix.shape[1],
+            accelerated,
+        )
+        matrix = pack(matrix)
     y, equality, inequality = solve(
         q,
         c,
