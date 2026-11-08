@@ -1,20 +1,20 @@
 {
-  "commit": "1ade33cdeff3bf07e13f9616efeeee6b4798126f",
+  "commit": "69a0da9bd443ba695a07cf1b294af86bc736422b",
   "measurement": "statement and branch coverage, entire package",
   "totals": {
-    "covered_lines": 8928,
-    "num_statements": 9586,
-    "percent_covered": 90.618538938663,
-    "percent_covered_display": "90.6",
+    "covered_lines": 8977,
+    "num_statements": 9635,
+    "percent_covered": 90.66918001885014,
+    "percent_covered_display": "90.7",
     "missing_lines": 658,
     "excluded_lines": 83,
-    "percent_statements_covered": 93.13582307531817,
-    "percent_statements_covered_display": "93.1",
-    "num_branches": 2022,
+    "percent_statements_covered": 93.17073170731707,
+    "percent_statements_covered_display": "93.2",
+    "num_branches": 2036,
     "num_partial_branches": 337,
-    "covered_branches": 1591,
+    "covered_branches": 1605,
     "missing_branches": 431,
-    "percent_branches_covered": 78.68447082096934,
-    "percent_branches_covered_display": "78.7"
+    "percent_branches_covered": 78.83104125736739,
+    "percent_branches_covered_display": "78.8"
   }
 }
