@@ -21,6 +21,27 @@ from purin.linalg.sparse.operators import (
 from .dense_implicit import _STATIC, _forward, _implicit
 
 
+def _validated_support(rows, n, row_count):
+    """Validate and pad the structural row layout outside JAX traces."""
+    if len(rows) != row_count:
+        raise ValueError("inequality_support must have one row per inequality.")
+    for row in rows:
+        if any(
+            not isinstance(i, Integral) or isinstance(i, bool) or i < 0 or i >= n
+            for i in row
+        ):
+            raise ValueError("Sparse support indices must be integers in [0, n).")
+        if len(set(row)) != len(row):
+            raise ValueError("Sparse support rows cannot contain duplicate indices.")
+    width = max(1, max(map(len, rows), default=0))
+    support = np.zeros((row_count, width), dtype=np.int32)
+    mask = np.zeros_like(support, dtype=bool)
+    for row_index, row in enumerate(rows):
+        support[row_index, : len(row)] = row
+        mask[row_index, : len(row)] = True
+    return support, mask
+
+
 @lru_cache(maxsize=128)
 def packed_implicit_solver(rows, n, row_count, accelerated=False):
     """Prepare a fixed sparsity pattern shared by primal and adjoint products.
@@ -42,22 +63,7 @@ def packed_implicit_solver(rows, n, row_count, accelerated=False):
         Only NumPy layout metadata is cached. JAX constants are materialized
         inside each trace, preventing traced arrays from escaping through cache.
     """
-    if len(rows) != row_count:
-        raise ValueError("inequality_support must have one row per inequality.")
-    for row in rows:
-        if any(
-            not isinstance(i, Integral) or isinstance(i, bool) or i < 0 or i >= n
-            for i in row
-        ):
-            raise ValueError("Sparse support indices must be integers in [0, n).")
-        if len(set(row)) != len(row):
-            raise ValueError("Sparse support rows cannot contain duplicate indices.")
-    width = max(1, max(map(len, rows), default=0))
-    support = np.zeros((row_count, width), dtype=np.int32)
-    mask = np.zeros_like(support, dtype=bool)
-    for row_index, row in enumerate(rows):
-        support[row_index, : len(row)] = row
-        mask[row_index, : len(row)] = True
+    support, mask = _validated_support(rows, n, row_count)
     column_rows, column_slots, column_mask = _build_column_gather_structure(
         support, mask, n
     )

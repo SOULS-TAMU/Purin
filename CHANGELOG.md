@@ -4,7 +4,7 @@ Notable changes to PURIN are recorded here. This history starts with the
 initial public version; internal development steps are not separate releases.
 Release dates follow the PyPI publication date in America/Chicago.
 
-## 1.0.1
+## 1.0.1 — 2026-11-07
 
 - Add optional structural sparse inequality products to the shared CP forward and implicit adjoint; retain dense equality operations and the existing vector diagonal proximal map. Dense behavior remains the default for library callers.
 
