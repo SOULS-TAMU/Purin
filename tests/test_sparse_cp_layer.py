@@ -47,7 +47,8 @@ def test_sparse_forward_and_structural_gradients(
             equilibrate=equilibrate,
             max_iterations=500,
             norm_iterations=25,
-            adjoint_iterations=25,
+            # Compare converged adjoints across platform reduction orders.
+            adjoint_iterations=100,
             inequality_support=rows if sparse else None,
         )
 
@@ -62,7 +63,10 @@ def test_sparse_forward_and_structural_gradients(
     dense_grad = jax.grad(loss)(parameters, False)
     sparse_grad = jax.grad(loss)(parameters, True)
     for x, y in zip(dense_grad, sparse_grad):
-        np.testing.assert_allclose(x, y, atol=2e-6, rtol=2e-5)
+        # The relative residual tolerance is 1e-6, so near-zero gradient
+        # components can differ across reduction orders by a few micro-units.
+        np.testing.assert_allclose(x, y, atol=5e-6, rtol=2e-5)
+        assert np.linalg.norm(x - y) <= 1e-5 * max(1.0, np.linalg.norm(x))
 
 
 @pytest.mark.parametrize(
