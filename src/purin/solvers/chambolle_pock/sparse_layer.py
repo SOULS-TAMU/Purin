@@ -18,7 +18,7 @@ from purin.linalg.sparse.operators import (
     _build_column_gather_buckets,
     _build_column_gather_structure,
 )
-from .dense_implicit import _STATIC, _forward, _implicit
+from .dense_implicit import _FORWARD_STATIC, _STATIC, _forward, _implicit
 
 
 def _validated_support(rows, n, row_count):
@@ -43,7 +43,9 @@ def _validated_support(rows, n, row_count):
 
 
 @lru_cache(maxsize=128)
-def packed_implicit_solver(rows, n, row_count, accelerated=False):
+def packed_implicit_solver(
+    rows, n, row_count, accelerated=False, *, return_iterations=False
+):
     """Prepare a fixed sparsity pattern shared by primal and adjoint products.
 
     Args:
@@ -53,6 +55,8 @@ def packed_implicit_solver(rows, n, row_count, accelerated=False):
         row_count: Number of inequality rows.
         accelerated: Use accelerated forward CP with the historical fixed
             implicit-adjoint policy.
+        return_iterations: Select the forward-only solver that also returns
+            the actual iteration count for each batch row.
 
     Returns:
         A dense-to-packed gather and a compiled implicit solver. Quadratic
@@ -105,5 +109,14 @@ def packed_implicit_solver(rows, n, row_count, accelerated=False):
 
         return mv, tmv
 
-    solve, _, _ = _implicit(_forward(accelerated, operator_factory), operator_factory)
-    return pack, jax.jit(solve, static_argnames=_STATIC)
+    forward = _forward(
+        accelerated, operator_factory, return_iterations=return_iterations
+    )
+    return pack, _compile_solver(forward, operator_factory, return_iterations)
+
+
+def _compile_solver(forward, operator_factory, return_iterations):
+    if return_iterations:
+        return jax.jit(forward, static_argnames=_FORWARD_STATIC)
+    solve, _, _ = _implicit(forward, operator_factory)
+    return jax.jit(solve, static_argnames=_STATIC)

@@ -11,7 +11,7 @@ from .dense import dense_operators, solve_dense
 from .kernels import cp_step, norm_estimate
 
 
-def _forward(accelerated, operator_factory=dense_operators):
+def _forward(accelerated, operator_factory=dense_operators, *, return_iterations=False):
     def solve(
         q,
         c,
@@ -50,6 +50,7 @@ def _forward(accelerated, operator_factory=dense_operators):
             y0=y0,
             lambda0=lam0,
             mu0=mu0,
+            return_iterations=return_iterations,
         )
 
     return solve
@@ -225,6 +226,13 @@ CP_fixed_implicit, _CP_fixed_implicit_fwd, _CP_fixed_implicit_bwd = _implicit(
 CP_accelerated_implicit, _CP_accelerated_implicit_fwd, _CP_accelerated_implicit_bwd = (
     _implicit(_forward(True))
 )
-_STATIC = ("safety", "knorm_iters", "knorm_seed", "max_iter", "tol", "adjoint_iters")
+_FORWARD_STATIC = ("safety", "knorm_iters", "knorm_seed", "max_iter", "tol")
+_STATIC = (*_FORWARD_STATIC, "adjoint_iters")
+_FIXED_WITH_ITERATIONS = jax.jit(
+    _forward(False, return_iterations=True), static_argnames=_FORWARD_STATIC
+)
+_ACCELERATED_WITH_ITERATIONS = jax.jit(
+    _forward(True, return_iterations=True), static_argnames=_FORWARD_STATIC
+)
 CP_fixed_implicit_jit = jax.jit(CP_fixed_implicit, static_argnames=_STATIC)
 CP_accelerated_implicit_jit = jax.jit(CP_accelerated_implicit, static_argnames=_STATIC)

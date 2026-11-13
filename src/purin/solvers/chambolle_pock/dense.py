@@ -44,6 +44,7 @@ def solve_dense(
     mu0=None,
     equilibrate=None,
     operator_factory=dense_operators,
+    return_iterations=False,
 ):
     """Adapt dense equality/inequality matrices to the shared sparse CP iteration."""
     arrays = [jnp.asarray(x) for x in (q, c, A, b, C, d, lower, upper)]
@@ -96,8 +97,9 @@ def solve_dense(
         operator_pair=operator_factory(A, C),
         factored_proximal=True,
     )
-    return (
+    solution = (
         columns * result.y,
         eq_scale * result.dual[:, :me],
         iq_scale * result.dual[:, me:],
     )
+    return (*solution, result.iterations) if return_iterations else solution

@@ -2,7 +2,12 @@
 
 import jax.numpy as jnp
 from purin.linalg.equilibration import ruiz_equilibrate
-from .dense_implicit import CP_fixed_implicit_jit, CP_accelerated_implicit_jit
+from .dense_implicit import (
+    CP_fixed_implicit_jit,
+    CP_accelerated_implicit_jit,
+    _FIXED_WITH_ITERATIONS,
+    _ACCELERATED_WITH_ITERATIONS,
+)
 
 
 def solve_dense_implicit(
@@ -28,6 +33,7 @@ def solve_dense_implicit(
     lambda0=None,
     mu0=None,
     inequality_support=None,
+    return_iterations=False,
 ):
     """Solve batched diagonal QPs with PURIN's implicit-differentiable CP layer.
 
@@ -58,11 +64,15 @@ def solve_dense_implicit(
         inequality_support: Optional fixed structural column indices for each
             inequality row. Every possible nonzero must be included. Only these
             entries are packed; equality products remain dense.
+        return_iterations: Append the actual iteration count per batch row.
+            This selects the forward-only path for inference diagnostics.
 
     Returns:
         Tuple ``(y, equality_multipliers, inequality_multipliers)`` in the
         original coordinates. Their shapes are ``(batch, n)``, ``(batch, me)``
         and ``(batch, mi)``. Zero-width constraint blocks are supported.
+        With return_iterations=True, the fourth array has shape (batch,).
+        This batched adapter advances all rows until the shared loop exits.
 
     Notes:
         Both forward modes use the shared CP iteration. Reverse mode uses
@@ -101,7 +111,8 @@ def solve_dense_implicit(
         y0 = y0 / columns
         lambda0 = lambda0 / jnp.where(eq_scale == 0.0, 1.0, eq_scale)
         mu0 = mu0 / jnp.where(iq_scale == 0.0, 1.0, iq_scale)
-    solve = CP_accelerated_implicit_jit if accelerated else CP_fixed_implicit_jit
+    solve = _dense_solver(accelerated, return_iterations)
+    solver_options = {} if return_iterations else {"adjoint_iters": adjoint_iterations}
     if inequality_support is not None:
         from .sparse_layer import packed_implicit_solver
 
@@ -110,9 +121,10 @@ def solve_dense_implicit(
             n,
             matrix.shape[1],
             accelerated,
+            return_iterations=return_iterations,
         )
         matrix = pack(matrix)
-    y, equality, inequality = solve(
+    y, equality, inequality, *info = solve(
         q,
         c,
         a,
@@ -126,11 +138,21 @@ def solve_dense_implicit(
         knorm_seed=norm_seed,
         max_iter=max_iterations,
         tol=tolerance,
-        adjoint_iters=adjoint_iterations,
         y0=y0,
         lam0=lambda0,
         mu0=mu0,
+        **solver_options,
     )
     if equilibrate:
-        return columns * y, eq_scale * equality, iq_scale * inequality
-    return y, equality, inequality
+        y, equality, inequality = (
+            columns * y,
+            eq_scale * equality,
+            iq_scale * inequality,
+        )
+    return y, equality, inequality, *info
+
+
+def _dense_solver(accelerated, return_iterations):
+    if return_iterations:
+        return _ACCELERATED_WITH_ITERATIONS if accelerated else _FIXED_WITH_ITERATIONS
+    return CP_accelerated_implicit_jit if accelerated else CP_fixed_implicit_jit
